@@ -3,6 +3,7 @@ import cors from 'cors';
 import * as dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import usersRouter from './routes/users'
+import journalLogsRouter from './routes/journalLogs'
 
 dotenv.config(); // allows us to hold environment variables in .env folder
 
@@ -21,6 +22,7 @@ connection.once('open', () => {
 })
 
 app.use('/users', usersRouter);
+app.use('/journallogs', journalLogsRouter);
 
 // starts the server
 app.listen(port, () => {

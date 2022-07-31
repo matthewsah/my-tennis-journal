@@ -7,6 +7,6 @@ const journalLogSchema = new Schema({
   reflection: {type: String, required: false},
 });
 
-const journalLog = mongoose.model('journalLog', journalLogSchema);
+const JournalLog = mongoose.model('JournalLog', journalLogSchema);
 
-export default journalLog;
+export default JournalLog;

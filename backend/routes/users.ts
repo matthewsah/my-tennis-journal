@@ -3,8 +3,8 @@ import User from '../models/user.model';
 
 const router = Router();
 
+// Get all users
 router.route('/').get( async (req, res) => {
-  console.log('made get request')
   try {
     const users = await User.find();
     res.status(200).json(users);
@@ -13,6 +13,23 @@ router.route('/').get( async (req, res) => {
   }
 });
 
+// return status code 200 for good login, something else for bad login
+router.route('/login').get( async (req, res) => {
+  try {
+    const {username, password} = req.body;
+    const loginSuccess = await User.find({username, password});
+    console.log(loginSuccess);
+    if (loginSuccess.length === 1) {
+      res.status(200).json("Successfully logged in");
+    } else {
+      res.status(404).json('Username or Password incorrect');
+    }
+  } catch (e) {
+    res.status(400).json(`Error: ${e instanceof Error ? e.message : e}`)
+  }
+})
+
+// Create a new User
 router.route('/').post( async (req, res) => {
   const {username, password} = req.body;
 
