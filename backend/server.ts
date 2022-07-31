@@ -2,6 +2,7 @@ import express, {Application} from 'express';
 import cors from 'cors';
 import * as dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import usersRouter from './routes/users'
 
 dotenv.config(); // allows us to hold environment variables in .env folder
 
@@ -18,6 +19,8 @@ const connection = mongoose.connection;
 connection.once('open', () => {
   console.log("Established connection to MongoDb")
 })
+
+app.use('/users', usersRouter);
 
 // starts the server
 app.listen(port, () => {
