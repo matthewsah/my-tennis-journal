@@ -1,11 +1,17 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import "../App.css";
 
 export default class Navbar extends Component {
   render() {
     return (
       <nav className="navbar navbar-dark bg-dark navbar-expand-sm">
         <Link to="/" className="navbar-brand">
+          <img
+            src="https://clipartix.com/wp-content/uploads/2016/10/Bouncing-tennis-ball-clipart-free-images.png"
+            className="navbar-image"
+            alt="tennis-ball"
+          />
           My Tennis Journal
         </Link>
         <div className="collapse navbar-collapse">

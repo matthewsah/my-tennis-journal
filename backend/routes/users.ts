@@ -15,16 +15,19 @@ router.route('/').get( async (req, res) => {
 
 // return status code 200 for good login, something else for bad login
 router.route('/login').get( async (req, res) => {
+  console.log(`Attempting to log in user: ${req.query.username}`)
   try {
-    const {username, password} = req.body;
+    const {username, password} = req.query;
     const loginSuccess = await User.find({username, password});
-    console.log(loginSuccess);
     if (loginSuccess.length === 1) {
+      console.log('Successfully logged in')
       res.status(200).json("Successfully logged in");
     } else {
+      console.log("Username or Password is incorrect");
       res.status(404).json('Username or Password incorrect');
     }
   } catch (e) {
+    console.log("Error trying to log in");
     res.status(400).json(`Error: ${e instanceof Error ? e.message : e}`)
   }
 })
