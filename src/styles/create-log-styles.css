@@ -7,6 +7,10 @@
   justify-content: space-between;
 }
 
+.pre-practice-focus-item {
+  width: 100%;
+}
+
 @media (min-width: 320px) {
   .focus-items-form,
   .reflection-text-area {

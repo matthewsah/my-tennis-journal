@@ -8,8 +8,8 @@ const router = Router();
 // by username
 router.route('/').get( async (req, res) => {
   try {
-    const { username } = req.body;
-    const logs = await JournalLog.find({username});
+    const { username, logComplete } = req.query;
+    const logs = await JournalLog.find({username, logComplete});
     res.status(200).json(logs);
   } catch(e) {
     res.status(400).json(`Error: ${e instanceof Error ? e.message : e}`)
@@ -37,6 +37,7 @@ router.route('/').post( async (req, res) => {
 
 // delete log by id
 router.route('/:id').delete( async (req, res) => {
+  console.log('deleting id ', req.params.id);
   try {
     await JournalLog.findByIdAndDelete(req.params.id);
     res.status(200).json('Successfully deleted');

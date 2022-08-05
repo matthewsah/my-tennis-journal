@@ -25,7 +25,7 @@ function App() {
         <br/> 
         <Routes> 
           <Route path="/" exact element={<Logs currentUser={currentUser}/>} /> 
-          <Route path="/createprepracticelog" element={<CreatePrePracticeLog />} /> 
+          <Route path="/createprepracticelog" element={<CreatePrePracticeLog currentUser={currentUser}/>} /> 
           <Route path="/createpostpracticelog" element={<CreatePostPracticeLog currentUser={currentUser}/>} /> 
           <Route path="/account" element={<Login currentUser={currentUser} changeUser={newLogin} />} />
         </Routes>

@@ -1,44 +1,98 @@
 import React, { Component } from "react";
 import JournalLog from "./journal-log.component.tsx";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
-interface ILoginProps extends ParameterDecorator {
+interface ILogProps extends ParameterDecorator {
   currentUser: string | undefined;
 }
 
-export default class Logs extends Component<ILoginProps, {}> {
-  constructor(props: ILoginProps) {
+class ILogState {
+  incompleteLogs: any;
+  completedLogs: any;
+}
+
+export default class Logs extends Component<ILogProps, ILogState> {
+  constructor(props: ILogProps) {
     super(props);
+
+    this.state = {
+      incompleteLogs: [],
+      completedLogs: [],
+    };
+  }
+
+  async componentDidMount() {
+    try {
+      let config = {
+        params: {
+          username: this.props.currentUser,
+          logComplete: false,
+        },
+      };
+
+      let res = await axios.get(`http://localhost:5000/journallogs/`, config);
+      // TODO: Sort the logs in chronological order
+      this.setState({
+        incompleteLogs: res.data,
+      });
+
+      config = {
+        params: {
+          username: this.props.currentUser,
+          logComplete: true,
+        },
+      };
+
+      res = await axios.get(`http://localhost:5000/journallogs/`, config);
+      // TODO: Sort the logs in chronological order
+      this.setState({
+        completedLogs: res.data,
+      });
+    } catch (e) {
+      console.error(`Error: ${e instanceof Error ? e.message : e}`);
+    }
+  }
+
+  renderIncompleteLogs() {
+    return this.state.incompleteLogs.map((currentLog) => {
+      return (
+        <JournalLog
+          _id={currentLog._id}
+          date={currentLog.date}
+          focusItems={currentLog.focusItems}
+          reflection={currentLog.reflection}
+          complete={currentLog.logComplete}
+        />
+      );
+    });
+  }
+
+  renderCompletedLogs() {
+    return this.state.completedLogs.map((currentLog) => {
+      return (
+        <JournalLog
+          _id={currentLog._id}
+          date={currentLog.date}
+          focusItems={currentLog.focusItems}
+          reflection={currentLog.reflection}
+          complete={currentLog.logComplete}
+        />
+      );
+    });
   }
 
   render() {
     return (
       <div>
-        currentUser is {this.props.currentUser}
-        <JournalLog
-          _id="123456789abc"
-          date={new Date()}
-          focusItems={{
-            "keep head up": undefined,
-            "look for and recognize short balls": undefined,
-          }}
-          reflection=""
-        />
-        <JournalLog
-          _id="123456789abc"
-          date={new Date()}
-          focusItems={{
-            "keep head up": 6,
-            "look for and recognize short balls": 8,
-          }}
-          reflection="today I had a really good practice. I was recognizing short balls well and looked for opportunities to come in. I think that If i keep playing like this it will be really good"
-        />
-        <JournalLog
-          _id="123456789abc"
-          date={new Date()}
-          focusItems={{}}
-          reflection="today I had a really good practice. I was recognizing short balls well and looked for opportunities to come in. I think that If i keep playing like this it will be really good"
-        />
+        <div>
+          {this.state.incompleteLogs.length > 0 && <h2>Incomplete logs</h2>}
+          {this.renderIncompleteLogs()}
+        </div>
+        <div>
+          {this.state.completedLogs.length > 0 && <h2>Completed logs</h2>}
+          {this.renderCompletedLogs()}
+        </div>
       </div>
     );
   }
