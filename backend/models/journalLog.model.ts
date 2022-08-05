@@ -5,6 +5,7 @@ const journalLogSchema = new Schema({
   date: {type: Date, required: true},
   focusItems: {type: Object, required: false},
   reflection: {type: String, required: false},
+  logComplete: {type: Boolean, required: true}
 });
 
 const JournalLog = mongoose.model('JournalLog', journalLogSchema);

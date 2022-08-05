@@ -34,15 +34,24 @@ router.route('/login').get( async (req, res) => {
 
 // Create a new User
 router.route('/').post( async (req, res) => {
-  const {username, password} = req.body;
+  const {username, password, firstName, lastName} = req.body;
 
   try {
-    const newUser = new User({username, password});
+    const newUser = new User({username, password, firstName, lastName});
     await newUser.save()
     res.status(200).json('User added!');
   } catch (e) {
     res.status(400).json(`Error: ${e instanceof Error ? e.message : e}`)
   }
 });
+
+router.route('/:id').delete( async (req, res) => {
+  try {
+    await User.findByIdAndDelete(req.params.id);
+    res.status(200).json('Successfully deleted');
+  } catch (e) {
+    res.status(400).json(`Error: ${e instanceof Error ? e.message : e}`)
+  }
+})
 
 export default router;

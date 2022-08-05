@@ -18,15 +18,15 @@ router.route('/').get( async (req, res) => {
 
 // add or update a journal log
 router.route('/').post( async (req, res) => {
-  const {username, date, focusItems, reflection, _id} = req.body;
+  const {_id, username, date, focusItems, reflection, logComplete} = req.body;
   try {
     const doc = await JournalLog.findOne({ _id });
     if (doc) {
-      doc.overwrite({username, date, focusItems, reflection});
+      doc.overwrite({username, date, focusItems, reflection, logComplete});
       await doc.save();
       res.status(200).json('Journal Log updated!')
     } else {
-      const newLog = new JournalLog({username, date, focusItems, reflection});
+      const newLog = new JournalLog({username, date, focusItems, reflection, logComplete});
       await newLog.save();
       res.status(200).json('Journal Log added!');
     }

@@ -1,0 +1,29 @@
+.focus-item {
+  width: 80%;
+  max-width: 500px;
+}
+
+.focus-items-form {
+  justify-content: space-between;
+}
+
+@media (min-width: 320px) {
+  .focus-items-form,
+  .reflection-text-area {
+    width: 100%;
+  }
+}
+
+@media (min-width: 720px) {
+  .focus-items-form,
+  .reflection-text-area {
+    width: 75%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .focus-items-form,
+  .reflection-text-area {
+    width: 50%;
+  }
+}

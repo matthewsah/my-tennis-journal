@@ -12,11 +12,16 @@ const userSchema = new Schema({
     type: String,
     required: true,
     unique: false,
-    minLength: 5
+    minLength: 3
   },
-  logs: {
-    type: Array,
-    required: false,
+  firstName: {
+    type: String,
+    required: true,
+    unique: false
+  }, 
+  lastName: {
+    type: String,
+    required: true,
     unique: false
   }
 });

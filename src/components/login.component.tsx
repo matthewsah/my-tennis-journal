@@ -12,6 +12,8 @@ class ILoginState {
   password: string;
   newUsername: string;
   newPassword: string;
+  firstName: string;
+  lastName: string;
 }
 
 export default class Login extends Component<ILoginProps, ILoginState> {
@@ -24,6 +26,9 @@ export default class Login extends Component<ILoginProps, ILoginState> {
 
     this.onChangeNewUsername = this.onChangeNewUsername.bind(this);
     this.onChangeNewPassword = this.onChangeNewPassword.bind(this);
+    this.onChangeFirstName = this.onChangeFirstName.bind(this);
+    this.onChangeLastName = this.onChangeLastName.bind(this);
+
     this.onSubmitNewUser = this.onSubmitNewUser.bind(this);
 
     this.onSubmitLogOut = this.onSubmitLogOut.bind(this);
@@ -33,11 +38,12 @@ export default class Login extends Component<ILoginProps, ILoginState> {
       password: "",
       newUsername: "",
       newPassword: "",
+      firstName: "",
+      lastName: "",
     };
   }
 
   onChangeUsername(e: React.ChangeEvent<HTMLInputElement>) {
-    console.log(typeof e);
     this.setState({
       username: e.target.value,
     });
@@ -50,7 +56,6 @@ export default class Login extends Component<ILoginProps, ILoginState> {
   }
 
   onChangeNewUsername(e: React.ChangeEvent<HTMLInputElement>) {
-    console.log(typeof e);
     this.setState({
       newUsername: e.target.value,
     });
@@ -59,6 +64,18 @@ export default class Login extends Component<ILoginProps, ILoginState> {
   onChangeNewPassword(e: React.ChangeEvent<HTMLInputElement>) {
     this.setState({
       newPassword: e.target.value,
+    });
+  }
+
+  onChangeFirstName(e: React.ChangeEvent<HTMLInputElement>) {
+    this.setState({
+      firstName: e.target.value,
+    });
+  }
+
+  onChangeLastName(e: React.ChangeEvent<HTMLInputElement>) {
+    this.setState({
+      lastName: e.target.value,
     });
   }
 
@@ -78,16 +95,22 @@ export default class Login extends Component<ILoginProps, ILoginState> {
       const res = await axios.get("http://localhost:5000/users/login", config);
       if (res.status === 200) {
         console.log("success");
-        this.props.changeUser(this.state.username);
+        await this.props.changeUser(this.state.username);
+        window.localStorage.setItem("user", `${this.state.username}`);
+        window.location.href = "/";
       } else {
         console.log("failure");
+        throw new Error("Could not log in");
       }
     } catch (e) {
-      console.log("e fail");
+      console.error(
+        `Error trying to log in: ${e instanceof Error ? e.message : e}`
+      );
+      window.location.reload();
     }
   }
 
-  onSubmitNewUser(e: any) {
+  async onSubmitNewUser(e: any) {
     e.preventDefault();
     console.log("in new user");
     console.log(
@@ -97,13 +120,23 @@ export default class Login extends Component<ILoginProps, ILoginState> {
     const userInfo = {
       username: this.state.newUsername,
       password: this.state.newPassword,
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
     };
 
-    // try and add the username / password to the database
-
-    // if successful, reload the page
-
-    // if unsuccessful,
+    try {
+      const res = await axios.post("http://localhost:5000/users/", userInfo);
+      if (res.status === 200) {
+        console.log("success");
+      } else {
+        console.log("failure");
+      }
+    } catch (e) {
+      console.error(
+        `Error trying to add new user: ${e instanceof Error ? e.message : e}`
+      );
+    }
+    window.location.reload();
   }
 
   onSubmitLogOut(e: any) {
@@ -112,20 +145,21 @@ export default class Login extends Component<ILoginProps, ILoginState> {
 
     // set the current user to undefined
     this.props.changeUser(undefined);
+    window.localStorage.clear();
   }
 
   render() {
     if (this.props.currentUser === undefined) {
       return (
         <Fragment>
-          <div>
+          <div className="mb-4">
             <h3>Log in</h3>
             <form onSubmit={this.onSubmitLogin}>
               <input
                 type="text"
                 placeholder="Username"
                 required
-                className="form-control"
+                className="form-control mb-2"
                 value={this.state.username}
                 onChange={this.onChangeUsername}
               />
@@ -134,18 +168,14 @@ export default class Login extends Component<ILoginProps, ILoginState> {
                 type="password"
                 placeholder="Password"
                 required
-                className="form-control"
+                className="form-control mb-2"
                 value={this.state.password}
                 onChange={this.onChangePassword}
               />
 
-              <div className="form-group">
-                <input
-                  type="submit"
-                  value="Log in"
-                  className="btn btn-primary"
-                />
-              </div>
+              <button type="submit" className="btn btn-primary">
+                Log in
+              </button>
             </form>
           </div>
           <div>
@@ -155,7 +185,7 @@ export default class Login extends Component<ILoginProps, ILoginState> {
                 type="text"
                 placeholder="Username"
                 required
-                className="form-control"
+                className="form-control mb-2"
                 value={this.state.newUsername}
                 onChange={this.onChangeNewUsername}
               />
@@ -164,17 +194,32 @@ export default class Login extends Component<ILoginProps, ILoginState> {
                 type="password"
                 placeholder="Password"
                 required
-                className="form-control"
+                className="form-control mb-2"
                 value={this.state.newPassword}
                 onChange={this.onChangeNewPassword}
               />
-              <div>
-                <input
-                  type="submit"
-                  value="Create Account"
-                  className="btn btn-primary"
-                />
-              </div>
+
+              <input
+                type="text"
+                placeholder="First Name"
+                required
+                className="form-control mb-2"
+                value={this.state.firstName}
+                onChange={this.onChangeFirstName}
+              />
+
+              <input
+                type="text"
+                placeholder="Last Name"
+                required
+                className="form-control mb-2"
+                value={this.state.lastName}
+                onChange={this.onChangeLastName}
+              />
+
+              <button type="submit" className="btn btn-primary">
+                Create Account
+              </button>
             </form>
           </div>
         </Fragment>
@@ -185,11 +230,9 @@ export default class Login extends Component<ILoginProps, ILoginState> {
           <h4>You are logged in as {this.props.currentUser}, not you?</h4>
           <form onSubmit={this.onSubmitLogOut}>
             <div className="form-group">
-              <input
-                type="submit"
-                value="Sign out"
-                className="btn btn-primary"
-              />
+              <button type="submit" className="btn btn-primary">
+                Log out
+              </button>
             </div>
           </form>
         </Fragment>
