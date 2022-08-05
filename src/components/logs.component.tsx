@@ -32,7 +32,13 @@ export default class Logs extends Component<ILogProps, ILogState> {
       };
 
       let res = await axios.get(`http://localhost:5000/journallogs/`, config);
-      // TODO: Sort the logs in chronological order
+      res.data.sort((d1: { date: string }, d2: { date: string }) => {
+        return (
+          new Date(d2.date.slice(0, 10)).getTime() -
+          new Date(d1.date.slice(0, 10)).getTime()
+        );
+      });
+
       this.setState({
         incompleteLogs: res.data,
       });
@@ -45,7 +51,13 @@ export default class Logs extends Component<ILogProps, ILogState> {
       };
 
       res = await axios.get(`http://localhost:5000/journallogs/`, config);
-      // TODO: Sort the logs in chronological order
+      res.data.sort((d1: { date: string }, d2: { date: string }) => {
+        return (
+          new Date(d2.date.slice(0, 10)).getTime() -
+          new Date(d1.date.slice(0, 10)).getTime()
+        );
+      });
+
       this.setState({
         completedLogs: res.data,
       });

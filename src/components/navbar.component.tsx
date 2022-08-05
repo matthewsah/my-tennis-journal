@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import "../App.css";
+import "../styles/navbar.css";
 
 interface INavbarProps extends ParameterDecorator {
   currentUser: string | undefined;

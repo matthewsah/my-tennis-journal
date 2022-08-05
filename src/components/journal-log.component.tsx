@@ -35,9 +35,9 @@ export default class JournalLog extends Component<
   render() {
     return (
       <div className="log-card d-flex w-100 p-4 mb-4">
-        <div className="d-flex w-100 align-items-center mb-2">
+        <div className="d-flex w-100 align-items-center mb-2 log-card-header p-2">
           <h3 className="log-card-date w-100 m-0">
-            {this.props.date.toString().slice(0, 10)}
+            Practice Log: {this.props.date.toString().slice(0, 10)}
           </h3>
           <div className="d-flex align-items-center">
             <a
@@ -58,7 +58,7 @@ export default class JournalLog extends Component<
         </div>
 
         {Object.keys(this.props.focusItems).length !== 0 ? (
-          <div className="d-flex w-100">
+          <div className="d-flex w-100 log-card-body">
             <div className="col-lg-3 col-md-4 col-sm-5">
               <h4>Focus Items / Performance</h4>
               {Object.keys(this.props.focusItems).map((key, _) => {
@@ -77,14 +77,14 @@ export default class JournalLog extends Component<
             </div>
           </div>
         ) : (
-          <div className="d-flex flex-column w-100">
+          <div className="d-flex flex-column w-100 log-card-body">
             <h4>Reflection</h4>
             <p>{this.props.reflection}</p>
           </div>
         )}
 
         {!this.state.inEditMode ? undefined : (
-          <div className="w-100">
+          <div className="w-100 log">
             <EditPracticeLog
               _id={this.props._id}
               date={this.props.date}
