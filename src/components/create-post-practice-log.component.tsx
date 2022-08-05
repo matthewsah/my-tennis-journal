@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import "../styles/log-styles.css";
+import "../styles/create-log-styles.css";
 import axios from "axios";
 
 interface IPostPracticeLogProps extends ParameterDecorator {

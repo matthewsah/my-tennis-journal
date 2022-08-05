@@ -1,29 +1,9 @@
-.focus-item {
-  width: 80%;
-  max-width: 500px;
+.log-card {
+  background-color: grey;
+  border-radius: 6px;
+  flex-flow: row wrap;
 }
 
-.focus-items-form {
-  justify-content: space-between;
-}
+/* .log-card-date {
 
-@media (min-width: 320px) {
-  .focus-items-form,
-  .reflection-text-area {
-    width: 100%;
-  }
-}
-
-@media (min-width: 720px) {
-  .focus-items-form,
-  .reflection-text-area {
-    width: 75%;
-  }
-}
-
-@media (min-width: 1200px) {
-  .focus-items-form,
-  .reflection-text-area {
-    width: 50%;
-  }
-}
+} */
