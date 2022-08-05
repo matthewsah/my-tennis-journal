@@ -184,9 +184,8 @@ export default class CreatePostPracticeLog extends Component<
     }
   }
 
-  // TODO: create onSubmit function for the form
   render() {
-    return (
+    return this.props.currentUser !== undefined ? (
       <Fragment>
         <h4>Create a new Post Practice Log</h4>
         {/* in this form we will need the date, optional focusitems, reflection: textarea */}
@@ -242,6 +241,8 @@ export default class CreatePostPracticeLog extends Component<
           </button>
         </form>
       </Fragment>
+    ) : (
+      <div>You'll need to log in first</div>
     );
   }
 }

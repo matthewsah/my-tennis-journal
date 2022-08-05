@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "../App.css";
 
-export default class Navbar extends Component {
+interface INavbarProps extends ParameterDecorator {
+  currentUser: string | undefined;
+}
+
+export default class Navbar extends Component<INavbarProps, {}> {
   render() {
     return (
       <nav className="navbar navbar-dark bg-dark navbar-expand-sm">
@@ -32,8 +36,8 @@ export default class Navbar extends Component {
               </Link>
             </li>
             <li className="navbar-item">
-              <Link to="/login" className="nav-link">
-                Log in
+              <Link to="/account" className="nav-link">
+                {this.props.currentUser !== undefined ? "Account" : "Log in"}
               </Link>
             </li>
           </ul>

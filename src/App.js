@@ -21,14 +21,14 @@ function App() {
   return (
     <Router> 
       <div className="container">
-      <Navbar /> 
+      <Navbar currentUser={currentUser}/> 
         <br/> 
         <Routes> 
           <Route path="/" exact element={<Logs currentUser={currentUser}/>} /> 
           <Route path="/createprepracticelog" element={<CreatePrePracticeLog />} /> 
           <Route path="/createpostpracticelog" element={<CreatePostPracticeLog currentUser={currentUser}/>} /> 
           {/* <Route path="/login" element={<Login />} /> */}
-          <Route path="/login" element={<Login currentUser={currentUser} changeUser={newLogin} />} />
+          <Route path="/account" element={<Login currentUser={currentUser} changeUser={newLogin} />} />
           {/* add current user to login page props */}
         </Routes>
       </div>
