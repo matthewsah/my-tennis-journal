@@ -11,6 +11,26 @@
   width: 100%;
 }
 
+.form-title {
+  background-color: #339966;
+  color: #fefff3;
+  border-radius: 4px;
+}
+
+.create-account-form,
+.login-form,
+.pre-practice-form,
+.post-practice-form {
+  background-color: #336699;
+  color: #fefff3;
+  border-radius: 6px;
+}
+
+.edit-reflection-text-area {
+  width: 100%;
+  border-radius: 4px;
+}
+
 @media (min-width: 320px) {
   .focus-items-form,
   .reflection-text-area {

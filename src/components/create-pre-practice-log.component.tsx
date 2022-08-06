@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import "../styles/create-log-styles.css";
+import "../styles/form-styles.css";
 import axios from "axios";
 
 interface IPrePracticeLogProps extends ParameterDecorator {
@@ -114,7 +114,7 @@ export default class CreatePostPracticeLog extends Component<
       );
       if (res.status === 200) {
         console.log("success");
-        // window.location.href = "/";
+        window.location.href = "/";
       } else {
         console.log("failure");
         throw new Error("Could not add log");
@@ -123,16 +123,16 @@ export default class CreatePostPracticeLog extends Component<
       console.error(
         `Error trying to log in: ${e instanceof Error ? e.message : e}`
       );
-      // window.location.reload();
+      window.location.reload();
     }
   }
 
   render() {
     return this.props.currentUser !== undefined ? (
       <Fragment>
-        <h4>Create a new Pre Practice Log</h4>
+        <h4 className="form-title p-2">Create a new Pre Practice Log</h4>
         {/* in this form we will need the date, optional focusitems, reflection: textarea */}
-        <form onSubmit={this.onSubmitLog}>
+        <form className="pre-practice-form p-2" onSubmit={this.onSubmitLog}>
           <div>
             <label>Date of Practice</label>
             <DatePicker
@@ -144,22 +144,23 @@ export default class CreatePostPracticeLog extends Component<
             />
           </div>
 
-          <PrePracticeFocusItem
-            focusItemNumber={1}
-            focusItemValue={this.state.focusItem1}
-            focusItemOnChange={this.onChangeFocusItem1}
-          />
-          <PrePracticeFocusItem
-            focusItemNumber={2}
-            focusItemValue={this.state.focusItem2}
-            focusItemOnChange={this.onChangeFocusItem2}
-          />
-          <PrePracticeFocusItem
-            focusItemNumber={3}
-            focusItemValue={this.state.focusItem3}
-            focusItemOnChange={this.onChangeFocusItem3}
-          />
-
+          <div className="mb-2">
+            <PrePracticeFocusItem
+              focusItemNumber={1}
+              focusItemValue={this.state.focusItem1}
+              focusItemOnChange={this.onChangeFocusItem1}
+            />
+            <PrePracticeFocusItem
+              focusItemNumber={2}
+              focusItemValue={this.state.focusItem2}
+              focusItemOnChange={this.onChangeFocusItem2}
+            />
+            <PrePracticeFocusItem
+              focusItemNumber={3}
+              focusItemValue={this.state.focusItem3}
+              focusItemOnChange={this.onChangeFocusItem3}
+            />
+          </div>
           <button type="submit" className="btn btn-primary">
             Create Log
           </button>

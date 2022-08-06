@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import JournalLog from "./journal-log.component.tsx";
-import { Link } from "react-router-dom";
 import axios from "axios";
 
 interface ILogProps extends ParameterDecorator {
@@ -95,7 +94,7 @@ export default class Logs extends Component<ILogProps, ILogState> {
   }
 
   render() {
-    return (
+    return this.props.currentUser !== undefined ? (
       <div>
         <div>
           {this.state.incompleteLogs.length > 0 && <h2>Incomplete logs</h2>}
@@ -106,6 +105,8 @@ export default class Logs extends Component<ILogProps, ILogState> {
           {this.renderCompletedLogs()}
         </div>
       </div>
+    ) : (
+      <div>Sign in to view your logs</div>
     );
   }
 }

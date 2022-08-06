@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import "bootstrap/dist/css/bootstrap.min.css"
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 
 import Navbar from "./components/navbar.component.tsx";
@@ -7,6 +6,8 @@ import Logs from "./components/logs.component.tsx";
 import Login from "./components/login.component.tsx";
 import CreatePrePracticeLog from "./components/create-pre-practice-log.component.tsx"
 import CreatePostPracticeLog from "./components/create-post-practice-log.component.tsx"
+
+import "bootstrap/dist/css/bootstrap.min.css"
 
 console.warn = console.error = () => {};
 

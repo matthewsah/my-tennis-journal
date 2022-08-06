@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Link } from "react-router-dom";
+import "../styles/form-styles.css";
 import axios from "axios";
 
 interface ILoginProps extends ParameterDecorator {
@@ -153,20 +153,22 @@ export default class Login extends Component<ILoginProps, ILoginState> {
       return (
         <Fragment>
           <div className="mb-4">
-            <h3>Log in</h3>
-            <form onSubmit={this.onSubmitLogin}>
+            <h3 className="form-title p-2">Log in</h3>
+            <form className="login-form p-2" onSubmit={this.onSubmitLogin}>
+              <label htmlFor="username">Username</label>
               <input
+                name="username"
                 type="text"
-                placeholder="Username"
                 required
                 className="form-control mb-2"
                 value={this.state.username}
                 onChange={this.onChangeUsername}
               />
 
+              <label htmlFor="password">Password</label>
               <input
+                name="password"
                 type="password"
-                placeholder="Password"
                 required
                 className="form-control mb-2"
                 value={this.state.password}
@@ -179,38 +181,45 @@ export default class Login extends Component<ILoginProps, ILoginState> {
             </form>
           </div>
           <div>
-            <h3>Create a new Account</h3>
-            <form onSubmit={this.onSubmitNewUser}>
+            <h3 className="form-title p-2">Create a new Account</h3>
+            <form
+              className="create-account-form p-2"
+              onSubmit={this.onSubmitNewUser}
+            >
+              <label htmlFor="create-account-username">Username</label>
               <input
+                name="create-account-username"
                 type="text"
-                placeholder="Username"
                 required
                 className="form-control mb-2"
                 value={this.state.newUsername}
                 onChange={this.onChangeNewUsername}
               />
 
+              <label htmlFor="create-account-password">Password</label>
               <input
+                name="create-account-password"
                 type="password"
-                placeholder="Password"
                 required
                 className="form-control mb-2"
                 value={this.state.newPassword}
                 onChange={this.onChangeNewPassword}
               />
 
+              <label htmlFor="first-name">First Name</label>
               <input
+                name="first-name"
                 type="text"
-                placeholder="First Name"
                 required
                 className="form-control mb-2"
                 value={this.state.firstName}
                 onChange={this.onChangeFirstName}
               />
 
+              <label htmlFor="last-name">Last Name</label>
               <input
+                name="last-name"
                 type="text"
-                placeholder="Last Name"
                 required
                 className="form-control mb-2"
                 value={this.state.lastName}

@@ -10,10 +10,10 @@
   border-radius: 4px;
 }
 
-a {
+.a {
   color: #fefff3;
 }
 
-/* .log-card-date {
-
-} */
+.a:hover {
+  color: #336699;
+}

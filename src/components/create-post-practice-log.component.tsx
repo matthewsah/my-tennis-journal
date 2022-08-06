@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import "../styles/create-log-styles.css";
+import "../styles/form-styles.css";
 import axios from "axios";
 
 interface IPostPracticeLogProps extends ParameterDecorator {
@@ -38,7 +38,7 @@ const FocusItem = function (props) {
 
       <div className="focus-item-evaluation">
         <label htmlFor={`focus${props.focusItemNumber}Evaluation`}>
-          Performance:{" "}
+          Performance
         </label>
         <input
           name={`focus${props.focusItemNumber}Evaluation`}
@@ -187,9 +187,9 @@ export default class CreatePostPracticeLog extends Component<
   render() {
     return this.props.currentUser !== undefined ? (
       <Fragment>
-        <h4>Create a new Post Practice Log</h4>
+        <h4 className="form-title p-2">Create a new Post Practice Log</h4>
         {/* in this form we will need the date, optional focusitems, reflection: textarea */}
-        <form onSubmit={this.onSubmitLog}>
+        <form className="post-practice-form p-2" onSubmit={this.onSubmitLog}>
           <div>
             <label>Date of Practice</label>
             <DatePicker

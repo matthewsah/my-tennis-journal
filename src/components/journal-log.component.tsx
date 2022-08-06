@@ -36,11 +36,12 @@ export default class JournalLog extends Component<
     return (
       <div className="log-card d-flex w-100 p-4 mb-4">
         <div className="d-flex w-100 align-items-center mb-2 log-card-header p-2">
-          <h3 className="log-card-date w-100 m-0">
+          <h4 className="log-card-date w-100 m-0">
             Practice Log: {this.props.date.toString().slice(0, 10)}
-          </h3>
+          </h4>
           <div className="d-flex align-items-center">
             <a
+              className="a"
               href="#"
               onClick={() => {
                 this.setState({
@@ -51,7 +52,11 @@ export default class JournalLog extends Component<
               edit
             </a>
             <span>|</span>
-            <a href="#" onClick={() => this.deleteLog(this.props._id)}>
+            <a
+              className="a"
+              href="#"
+              onClick={() => this.deleteLog(this.props._id)}
+            >
               delete
             </a>
           </div>
@@ -60,7 +65,7 @@ export default class JournalLog extends Component<
         {Object.keys(this.props.focusItems).length !== 0 ? (
           <div className="d-flex w-100 log-card-body">
             <div className="col-lg-3 col-md-4 col-sm-5">
-              <h4>Focus Items / Performance</h4>
+              <h5>Focus Items | Performance</h5>
               {Object.keys(this.props.focusItems).map((key, _) => {
                 return (
                   <div className="d-flex justify-content-between">
@@ -72,13 +77,13 @@ export default class JournalLog extends Component<
             </div>
             <div className="col-1"></div>
             <div className="col-lg-8 col-md-7 col-sm-6">
-              <h4>Reflection</h4>
+              <h5>Reflection</h5>
               <p>{this.props.reflection}</p>
             </div>
           </div>
         ) : (
           <div className="d-flex flex-column w-100 log-card-body">
-            <h4>Reflection</h4>
+            <h5>Reflection</h5>
             <p>{this.props.reflection}</p>
           </div>
         )}

@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import "../styles/create-log-styles.css";
+import "../styles/form-styles.css";
 import axios from "axios";
 import mongoose from "mongoose";
 
@@ -203,7 +203,8 @@ export default class EditPracticeLog extends Component<
   render() {
     return (
       <Fragment>
-        <h4>Editing Practice Log</h4>
+        <br></br>
+        <h5>Edit Practice Log</h5>
         {/* in this form we will need the date, optional focusitems, reflection: textarea */}
         <form onSubmit={this.onSubmitEdits}>
           <FocusItem
@@ -234,7 +235,7 @@ export default class EditPracticeLog extends Component<
             </div>
             <textarea
               name="reflection"
-              className="reflection-text-area"
+              className="edit-reflection-text-area"
               required
               value={this.state.reflection}
               onChange={this.onChangeReflection}
