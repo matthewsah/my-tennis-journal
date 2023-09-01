@@ -4,16 +4,18 @@ import "react-datepicker/dist/react-datepicker.css";
 import "../styles/form-styles.css";
 import axios from "axios";
 
-interface IPrePracticeLogProps extends ParameterDecorator {
-  currentUser: string | undefined;
-}
+const port = 5001;
 
-class IPrePracticeLogState {
-  date: Date;
-  focusItem1: string;
-  focusItem2: string;
-  focusItem3: string;
-}
+// interface IPrePracticeLogProps extends ParameterDecorator {
+//   currentUser: string | undefined;
+// }
+
+// class IPrePracticeLogState {
+//   date: Date;
+//   focusItem1: string;
+//   focusItem2: string;
+//   focusItem3: string;
+// }
 
 const PrePracticeFocusItem = function (props) {
   return (
@@ -35,13 +37,16 @@ const PrePracticeFocusItem = function (props) {
   );
 };
 
-export default class CreatePostPracticeLog extends Component<
-  IPrePracticeLogProps,
-  IPrePracticeLogState
-> {
-  constructor(props: IPrePracticeLogProps) {
+// export default class CreatePostPracticeLog extends Component<
+//   IPrePracticeLogProps,
+//   IPrePracticeLogState
+// > {
+export default class CreatePostPracticeLog extends Component {
+  // constructor(props: IPrePracticeLogProps) {
+  constructor(props) {
     super(props);
 
+    // this.handleChange = this.handleChange.bind(this)
     this.onChangeDate = this.onChangeDate.bind(this);
     this.onChangeFocusItem1 = this.onChangeFocusItem1.bind(this);
     this.onChangeFocusItem2 = this.onChangeFocusItem2.bind(this);
@@ -56,31 +61,44 @@ export default class CreatePostPracticeLog extends Component<
     };
   }
 
-  private onChangeDate(newDate: Date) {
+  // private handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+  //   const {name, value} = event.target;
+  //   this.setState((prevState) => ({
+  //     ...prevState,
+  //     [name]: value
+  //   }));
+  // }
+
+  // private onChangeDate(newDate: Date) {
+  onChangeDate(newDate) {
     this.setState({
       date: newDate,
     });
   }
 
-  private onChangeFocusItem1(e: React.ChangeEvent<HTMLInputElement>) {
+  // private onChangeFocusItem1(e: React.ChangeEvent<HTMLInputElement>) {
+  onChangeFocusItem1(e) {
     this.setState({
       focusItem1: e.target.value,
     });
   }
 
-  private onChangeFocusItem2(e: React.ChangeEvent<HTMLInputElement>) {
+  // private onChangeFocusItem2(e: React.ChangeEvent<HTMLInputElement>) {
+  onChangeFocusItem2(e) {
     this.setState({
       focusItem2: e.target.value,
     });
   }
 
-  private onChangeFocusItem3(e: React.ChangeEvent<HTMLInputElement>) {
+  // private onChangeFocusItem3(e: React.ChangeEvent<HTMLInputElement>) {
+  onChangeFocusItem3(e) {
     this.setState({
       focusItem3: e.target.value,
     });
   }
 
-  private async onSubmitLog(e: any) {
+  // private async onSubmitLog(e: any) {
+  async onSubmitLog(e) {
     e.preventDefault();
     console.log("attempting to submit log");
 
@@ -109,7 +127,7 @@ export default class CreatePostPracticeLog extends Component<
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/journalLogs/",
+        `http://localhost:${port}/journalLogs/`,
         journalLog
       );
       if (res.status === 200) {
@@ -134,6 +152,7 @@ export default class CreatePostPracticeLog extends Component<
         {/* in this form we will need the date, optional focusitems, reflection: textarea */}
         <form className="pre-practice-form p-2" onSubmit={this.onSubmitLog}>
           <div>
+            {/* add "for=dateOfPractice" */}
             <label>Date of Practice</label>
             <DatePicker
               name="dateOfPractice"
@@ -155,13 +174,14 @@ export default class CreatePostPracticeLog extends Component<
               focusItemValue={this.state.focusItem2}
               focusItemOnChange={this.onChangeFocusItem2}
             />
+            {/* make this.handleChange into callback => handleChange(correctName) */}
             <PrePracticeFocusItem
               focusItemNumber={3}
               focusItemValue={this.state.focusItem3}
               focusItemOnChange={this.onChangeFocusItem3}
             />
           </div>
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" className="btn button">
             Create Log
           </button>
         </form>

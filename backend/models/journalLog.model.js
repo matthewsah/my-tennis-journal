@@ -1,6 +1,6 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose from 'mongoose';
 
-const journalLogSchema = new Schema({
+const journalLogSchema = new mongoose.Schema({
   username: {type: String, required: true},
   date: {type: Date, required: true},
   focusItems: {type: Object, required: false},

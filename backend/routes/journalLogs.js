@@ -1,6 +1,6 @@
 import {Router} from 'express';
-import User from '../models/user.model';
-import JournalLog from '../models/journalLog.model'
+import User from '../models/user.model.js';
+import JournalLog from '../models/journalLog.model.js'
 
 const router = Router();
 
@@ -10,6 +10,7 @@ router.route('/').get( async (req, res) => {
   try {
     const { username, logComplete } = req.query;
     const logs = await JournalLog.find({username, logComplete});
+    console.log('got logs', logs.toString())
     res.status(200).json(logs);
   } catch(e) {
     res.status(400).json(`Error: ${e instanceof Error ? e.message : e}`)

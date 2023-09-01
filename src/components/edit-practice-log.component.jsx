@@ -3,21 +3,29 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../styles/form-styles.css";
 import axios from "axios";
+import mongoose from "mongoose";
 
-interface IPostPracticeLogProps extends ParameterDecorator {
-  currentUser: string | undefined;
-}
+const port = 5001;
 
-class IPostPracticeLogState {
-  date: Date;
-  focusItem1: string;
-  focusItem1Evaluation: number;
-  focusItem2: string;
-  focusItem2Evaluation: number;
-  focusItem3: string;
-  focusItem3Evaluation: number;
-  reflection: string;
-}
+// interface IEditPracticeLogProps extends ParameterDecorator {
+//   _id: string;
+//   username: string;
+//   date: Date;
+//   focusItems: object;
+//   focusItemsKeys: string[];
+//   reflection: string;
+// }
+
+// class IEditPracticeLogState {
+//   date: Date;
+//   focusItem1: string;
+//   focusItem1Evaluation: number;
+//   focusItem2: string;
+//   focusItem2Evaluation: number;
+//   focusItem3: string;
+//   focusItem3Evaluation: number;
+//   reflection: string;
+// }
 
 const FocusItem = function (props) {
   return (
@@ -38,7 +46,7 @@ const FocusItem = function (props) {
 
       <div className="focus-item-evaluation">
         <label htmlFor={`focus${props.focusItemNumber}Evaluation`}>
-          Performance
+          Performance:{" "}
         </label>
         <input
           name={`focus${props.focusItemNumber}Evaluation`}
@@ -56,11 +64,13 @@ const FocusItem = function (props) {
   );
 };
 
-export default class CreatePostPracticeLog extends Component<
-  IPostPracticeLogProps,
-  IPostPracticeLogState
-> {
-  constructor(props: IPostPracticeLogProps) {
+// export default class EditPracticeLog extends Component<
+//   IEditPracticeLogProps,
+//   IEditPracticeLogState
+// > {
+export default class EditPracticeLog extends Component {
+  // constructor(props: IEditPracticeLogProps) {
+  constructor(props) {
     super(props);
 
     this.onChangeDate = this.onChangeDate.bind(this);
@@ -74,72 +84,95 @@ export default class CreatePostPracticeLog extends Component<
     this.onChangeFocusItem3Evaluation =
       this.onChangeFocusItem3Evaluation.bind(this);
     this.onChangeReflection = this.onChangeReflection.bind(this);
-    this.onSubmitLog = this.onSubmitLog.bind(this);
+    this.onSubmitEdits = this.onSubmitEdits.bind(this);
 
+    this.initStates();
+  }
+
+  // private initStates() {
+  initStates() {
     this.state = {
-      date: new Date(),
-      focusItem1: "",
-      focusItem1Evaluation: undefined,
-      focusItem2: "",
-      focusItem2Evaluation: undefined,
-      focusItem3: "",
-      focusItem3Evaluation: undefined,
-      reflection: "",
+      date: this.props.date,
+      focusItem1:
+        this.props.focusItemsKeys[0] !== undefined
+          ? this.props.focusItemsKeys[0]
+          : "",
+      focusItem1Evaluation: this.props.focusItems[this.props.focusItemsKeys[0]],
+      focusItem2:
+        this.props.focusItemsKeys[1] !== undefined
+          ? this.props.focusItemsKeys[1]
+          : "",
+      focusItem2Evaluation: this.props.focusItems[this.props.focusItemsKeys[1]],
+      focusItem3:
+        this.props.focusItemsKeys[2] !== undefined
+          ? this.props.focusItemsKeys[2]
+          : "",
+      focusItem3Evaluation: this.props.focusItems[this.props.focusItemsKeys[2]],
+      reflection: this.props.reflection,
     };
   }
 
-  private onChangeDate(newDate: Date) {
+  // private onChangeDate(newDate: Date) {
+  onChangeDate(newDate) {
     this.setState({
       date: newDate,
     });
   }
 
-  private onChangeFocusItem1(e: React.ChangeEvent<HTMLInputElement>) {
+  // private onChangeFocusItem1(e: React.ChangeEvent<HTMLInputElement>) {
+  onChangeFocusItem1(e) {
     this.setState({
       focusItem1: e.target.value,
     });
   }
 
-  private onChangeFocusItem1Evaluation(e: React.ChangeEvent<HTMLInputElement>) {
+  // private onChangeFocusItem1Evaluation(e: React.ChangeEvent<HTMLInputElement>) {
+  onChangeFocusItem1Evaluation(e) {
     this.setState({
       focusItem1Evaluation:
         e.target.value !== "" ? Number.parseFloat(e.target.value) : undefined,
     });
   }
 
-  private onChangeFocusItem2(e: React.ChangeEvent<HTMLInputElement>) {
+  // private onChangeFocusItem2(e: React.ChangeEvent<HTMLInputElement>) {
+  onChangeFocusItem2(e) {
     this.setState({
       focusItem2: e.target.value,
     });
   }
 
-  private onChangeFocusItem2Evaluation(e: React.ChangeEvent<HTMLInputElement>) {
+  // private onChangeFocusItem2Evaluation(e: React.ChangeEvent<HTMLInputElement>) {
+  onChangeFocusItem2Evaluation(e) {
     this.setState({
       focusItem2Evaluation:
         e.target.value !== "" ? Number.parseFloat(e.target.value) : undefined,
     });
   }
 
-  private onChangeFocusItem3(e: React.ChangeEvent<HTMLInputElement>) {
+  // private onChangeFocusItem3(e: React.ChangeEvent<HTMLInputElement>) {
+  onChangeFocusItem3(e) {
     this.setState({
       focusItem3: e.target.value,
     });
   }
 
-  private onChangeFocusItem3Evaluation(e: React.ChangeEvent<HTMLInputElement>) {
+  // private onChangeFocusItem3Evaluation(e: React.ChangeEvent<HTMLInputElement>) {
+  onChangeFocusItem3Evaluation(e) {
     this.setState({
       focusItem3Evaluation:
         e.target.value !== "" ? Number.parseFloat(e.target.value) : undefined,
     });
   }
 
-  private onChangeReflection(e: React.ChangeEvent<HTMLTextAreaElement>) {
+  // private onChangeReflection(e: React.ChangeEvent<HTMLTextAreaElement>) {
+  onChangeReflection(e) {
     this.setState({
       reflection: e.target.value,
     });
   }
 
-  private async onSubmitLog(e: any) {
+  // private async onSubmitEdits(e: any) {
+  async onSubmitEdits(e) {
     e.preventDefault();
     console.log("attempting to submit log");
 
@@ -155,18 +188,17 @@ export default class CreatePostPracticeLog extends Component<
     }
 
     const journalLog = {
-      username: this.props.currentUser,
-      date: this.state.date,
+      _id: new mongoose.Types.ObjectId(this.props._id),
+      username: this.props.username,
+      date: this.props.date,
       focusItems,
       reflection: this.state.reflection,
       logComplete: true,
     };
 
-    console.log("journal log:", journalLog);
-
     try {
       const res = await axios.post(
-        "http://localhost:5000/journalLogs/",
+        `http://localhost:${port}/journalLogs/`,
         journalLog
       );
       if (res.status === 200) {
@@ -177,30 +209,18 @@ export default class CreatePostPracticeLog extends Component<
         throw new Error("Could not add log");
       }
     } catch (e) {
-      console.error(
-        `Error trying to log in: ${e instanceof Error ? e.message : e}`
-      );
+      console.error(`Error: ${e instanceof Error ? e.message : e}`);
       window.location.reload();
     }
   }
 
   render() {
-    return this.props.currentUser !== undefined ? (
+    return (
       <Fragment>
-        <h4 className="form-title p-2">Create a new Post Practice Log</h4>
+        <br></br>
+        <h5>Edit Practice Log</h5>
         {/* in this form we will need the date, optional focusitems, reflection: textarea */}
-        <form className="post-practice-form p-2" onSubmit={this.onSubmitLog}>
-          <div>
-            <label>Date of Practice</label>
-            <DatePicker
-              name="dateOfPractice"
-              selected={this.state.date}
-              onChange={this.onChangeDate}
-              maxDate={new Date()}
-              required
-            />
-          </div>
-
+        <form onSubmit={this.onSubmitEdits}>
           <FocusItem
             focusItemNumber={1}
             focusItemValue={this.state.focusItem1}
@@ -229,20 +249,19 @@ export default class CreatePostPracticeLog extends Component<
             </div>
             <textarea
               name="reflection"
-              className="reflection-text-area"
+              className="edit-reflection-text-area"
+              required
               value={this.state.reflection}
               onChange={this.onChangeReflection}
               placeholder="Reflect on your practice (required)"
             />
           </div>
 
-          <button type="submit" className="btn btn-primary">
-            Create Log
+          <button type="submit" className="btn button">
+            Save Changes
           </button>
         </form>
       </Fragment>
-    ) : (
-      <div>You'll need to log in first</div>
     );
   }
 }

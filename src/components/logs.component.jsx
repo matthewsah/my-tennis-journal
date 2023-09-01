@@ -1,18 +1,23 @@
 import React, { Component } from "react";
-import JournalLog from "./journal-log.component.tsx";
+import JournalLog from "./journal-log.component.jsx";
 import axios from "axios";
 
-interface ILogProps extends ParameterDecorator {
-  currentUser: string | undefined;
-}
+const port = 5001;
 
-class ILogState {
-  incompleteLogs: any;
-  completedLogs: any;
-}
 
-export default class Logs extends Component<ILogProps, ILogState> {
-  constructor(props: ILogProps) {
+// interface ILogProps extends ParameterDecorator {
+//   currentUser: string | undefined;
+// }
+
+// class ILogState {
+//   incompleteLogs: any;
+//   completedLogs: any;
+// }
+
+// export default class Logs extends Component<ILogProps, ILogState> {
+export default class Logs extends Component {
+  // constructor(props: ILogProps) {
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -30,8 +35,9 @@ export default class Logs extends Component<ILogProps, ILogState> {
         },
       };
 
-      let res = await axios.get(`http://localhost:5000/journallogs/`, config);
-      res.data.sort((d1: { date: string }, d2: { date: string }) => {
+      let res = await axios.get(`http://localhost:${port}/journallogs/`, config);
+      // res.data.sort((d1: { date: string }, d2: { date: string }) => {
+      res.data.sort((d1, d2) => {
         return (
           new Date(d2.date.slice(0, 10)).getTime() -
           new Date(d1.date.slice(0, 10)).getTime()
@@ -49,8 +55,8 @@ export default class Logs extends Component<ILogProps, ILogState> {
         },
       };
 
-      res = await axios.get(`http://localhost:5000/journallogs/`, config);
-      res.data.sort((d1: { date: string }, d2: { date: string }) => {
+      res = await axios.get(`http://localhost:${port}/journallogs/`, config);
+      res.data.sort((d1, d2) => {
         return (
           new Date(d2.date.slice(0, 10)).getTime() -
           new Date(d1.date.slice(0, 10)).getTime()

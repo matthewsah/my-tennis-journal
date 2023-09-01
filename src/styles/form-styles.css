@@ -36,12 +36,22 @@
   .reflection-text-area {
     width: 100%;
   }
+
+  .login-form-inputs,
+  .create-account-form-inputs {
+    width: 40%;
+  }
 }
 
 @media (min-width: 720px) {
   .focus-items-form,
   .reflection-text-area {
     width: 75%;
+  }
+
+  .login-form-inputs,
+  .create-account-form-inputs {
+    width: 30%;
   }
 }
 
@@ -50,4 +60,14 @@
   .reflection-text-area {
     width: 50%;
   }
+
+  .login-form-inputs,
+  .create-account-form-inputs {
+    width: 20%;
+  }
+}
+
+.button {
+  background-color: #339966 !important;
+  color: white !important;
 }

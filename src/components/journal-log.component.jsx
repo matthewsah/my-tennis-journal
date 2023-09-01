@@ -1,25 +1,30 @@
 import React, { Component } from "react";
-import EditPracticeLog from "./edit-practice-log.component.tsx";
+import EditPracticeLog from "./edit-practice-log.component.jsx";
 import "../styles/log-styles.css";
 import axios from "axios";
 
-interface IJournalLogProps extends ParameterDecorator {
-  date: Date;
-  focusItems: object;
-  reflection: string;
-  _id: string;
-  complete: boolean;
-}
+const port =  5001;
 
-class IJournalLogState {
-  inEditMode: boolean;
-}
 
-export default class JournalLog extends Component<
-  IJournalLogProps,
-  IJournalLogState
-> {
-  constructor(props: IJournalLogProps) {
+// interface IJournalLogProps extends ParameterDecorator {
+//   date: Date;
+//   focusItems: object;
+//   reflection: string;
+//   _id: string;
+//   complete: boolean;
+// }
+
+// class IJournalLogState {
+//   inEditMode: boolean;
+// }
+
+// export default class JournalLog extends Component<
+//   IJournalLogProps,
+//   IJournalLogState
+// > {
+export default class JournalLog extends Component {
+  // constructor(props: IJournalLogProps) {
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -27,8 +32,9 @@ export default class JournalLog extends Component<
     };
   }
 
-  private async deleteLog(id: string) {
-    await axios.delete(`http://localhost:5000/journallogs/${id}`);
+  // private async deleteLog(id: string) {
+  async deleteLog(id) {
+    await axios.delete(`http://localhost:${port}/journallogs/${id}`);
     window.location.reload();
   }
 

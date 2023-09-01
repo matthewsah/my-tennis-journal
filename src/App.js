@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 
-import Navbar from "./components/navbar.component.tsx";
-import Logs from "./components/logs.component.tsx";
-import Login from "./components/login.component.tsx";
-import CreatePrePracticeLog from "./components/create-pre-practice-log.component.tsx"
-import CreatePostPracticeLog from "./components/create-post-practice-log.component.tsx"
+import Navbar from "./components/navbar.component.jsx";
+import Logs from "./components/logs.component.jsx";
+import Login from "./components/login.component.jsx";
+import CreatePrePracticeLog from "./components/create-pre-practice-log.component.jsx"
+import CreatePostPracticeLog from "./components/create-post-practice-log.component.jsx"
 
 import "bootstrap/dist/css/bootstrap.min.css"
 

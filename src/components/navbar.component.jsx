@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "../styles/navbar.css";
 
-interface INavbarProps extends ParameterDecorator {
-  currentUser: string | undefined;
-}
+// interface INavbarProps extends ParameterDecorator {
+//   currentUser: string | undefined;
+// }
 
-export default class Navbar extends Component<INavbarProps, {}> {
+// export default class Navbar extends Component<INavbarProps, {}> {
+export default class Navbar extends Component {
   render() {
     return (
       <nav className="navbar navbar-dark bg-dark navbar-expand-sm">
