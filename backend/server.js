@@ -14,8 +14,9 @@ const port = process.env.PORT || 5001;
 app.use(cors()); // middleware
 app.use(express.json()); // allows us to parse json
 
-const uri = process.env.ATLAS_URI;
-mongoose.connect(uri);
+// const uri = process.env.ATLAS_URI;
+// mongoose.connect("mongodb+srv://msah:N4xss7d6@cluster0.ckgd7.mongodb.net/?retryWrites=true&w=majority");
+mongoose.connect("mongodb+srv://msah:N4xss7d6@cluster0.ckgd7.mongodb.net/mytennisjournal?retryWrites=true&w=majority");
 const connection = mongoose.connection;
 
 try {
